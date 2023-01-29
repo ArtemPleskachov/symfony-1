@@ -36,6 +36,9 @@ class User
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $age = null;
 
+//    #[ORM\Column(type: Types::STRING, length: 42, nullable: true)]
+//    private string|null $city;
+
     /**
      * @param string $login
      * @param string $password
@@ -166,5 +169,23 @@ class User
     {
         $this->phones->add($phone);
     }
+
+//    /**
+//     * @return string|null
+//     */
+//    public function getCity(): ?string
+//    {
+//        return $this->city;
+//    }
+//
+//    /**
+//     * @param string|null $city
+//     */
+//    public function setCity(?string $city): void
+//    {
+//        $this->city = $city;
+//    }
+
+
 
 }
