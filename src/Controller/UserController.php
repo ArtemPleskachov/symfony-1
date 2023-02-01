@@ -3,14 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('users/generate')]
+    private EntityManager $em;
+
+    #[Route('/users/generate')]
     public function generateUsers(ManagerRegistry $doctrine):Response
     {
         $map = [
@@ -33,4 +37,43 @@ class UserController extends AbstractController
 
         return new Response('Users are create');
     }
+
+    #[Route('/users')]
+    public function getUsers(ManagerRegistry $doctrine): Response
+    {
+        $users = $doctrine->getRepository(User::class)->findAll();
+        $result = '';
+        foreach ($users as $user) {
+            $result .= $user->getId()
+                . ' - ' . $user->getLogin()
+                . ' - ' . $user->getStatus()
+                . '<br>';
+        }
+        return new Response(
+            $result
+        );
+    }
+
+
+
+    #[Route('/user/([0-9]+)/vip')]
+    public function userVip(ManagerRegistry $doctrine): Response
+    {
+        $manager = $doctrine->getManager(User::class);
+        $user = $doctrine->getRepository(User::class)->findAll();
+        $user->setStatusVIP();
+        $manager->flush();
+
+        $result = 'User ' . $user->getId() . ' - ' .$user->getLogin() . ' - VIP';
+
+        return new Response(
+            $result
+        );
+    }
+
+
+
+
+
+
 }
