@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserController extends AbstractController
 {
-    private EntityManager $em;
 
     #[Route('/users/generate')]
     public function generateUsers(ManagerRegistry $doctrine):Response
@@ -56,13 +55,14 @@ class UserController extends AbstractController
 
 
 
-    #[Route('/user/([0-9]+)/vip')]
-    public function userVip(ManagerRegistry $doctrine): Response
+    #[Route('/user/{id}/vip', requirements: ['id' => '\d+'], methods: ['GET'])]
+
+    public function userVip(ManagerRegistry $doctrine, $id): Response
     {
-        $manager = $doctrine->getManager(User::class);
-        $user = $doctrine->getRepository(User::class)->findAll();
+
+        $user = $doctrine->getRepository(User::class)->find($id);
         $user->setStatusVIP();
-        $manager->flush();
+        $doctrine->getManager()->flush();
 
         $result = 'User ' . $user->getId() . ' - ' .$user->getLogin() . ' - VIP';
 
