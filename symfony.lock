@@ -35,6 +35,18 @@
             "migrations/.gitignore"
         ]
     },
+    "nyholm/psr7": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
+    },
     "phpunit/phpunit": {
         "version": "9.5",
         "recipe": {
@@ -278,5 +290,14 @@
     },
     "twig/extra-bundle": {
         "version": "v3.5.0"
+    },
+    "ufo-tech/json-rpc-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/UFO-Tech/recipes",
+            "branch": "main",
+            "version": "4.0",
+            "ref": "4b15918d47bf69303c38a504a187fdb0d112d16v"
+        }
     }
 }
