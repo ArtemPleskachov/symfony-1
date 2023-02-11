@@ -70,9 +70,26 @@ class UserController extends AbstractController
             $result
         );
     }
+	
+	#[Route('/user/lucky')]
+	public function userLucky(ManagerRegistry $doctrine): Response
+	{
+		$users = $doctrine->getRepository(User::class)->findAll();
+		$randomIndex = array_rand($users);
+		$randomUser = $users[$randomIndex];
+		
+		$randomUser->setStatusVIP();
+		$doctrine->getManager()->flush();
+		
+		$result = 'Dear ' . $randomUser->getId() . ' ' . $randomUser->getLogin() . ', congratulations';
+		
+		return new Response(
+			$result
+		);
+	}
 
 
-
+//Stop in 44 minute
 
 
 

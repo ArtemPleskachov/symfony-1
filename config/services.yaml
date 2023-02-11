@@ -22,3 +22,25 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Controller\MainController:
+        arguments:
+            $converter: '@App\Shortener\Interfaces\IUrlEncoder'
+            $anywayConverter: '@App\Shortener\Interfaces\IUrlEncoderAnyway'
+        public: true
+
+    App\Shortener\Interfaces\IUrlEncoder:
+        class: App\Shortener\UrlConverter
+        public: true
+
+    App\Shortener\Interfaces\IUrlEncoderAnyway:
+        class: App\Shortener\UrlAnywayConverter
+        public: true
+
+    App\Shortener\Interfaces\IUrlDecoder:
+        class: App\Shortener\UrlConverter
+        public: true
+
+    GuzzleHttp\ClientInterface:
+        class: GuzzleHttp\Client
+
