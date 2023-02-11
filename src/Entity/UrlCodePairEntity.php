@@ -23,6 +23,15 @@ class UrlCodePairEntity
 
     #[ORM\Column(type: Types::STRING, length: 12)]
     private string $code;
+	
+	#[ORM\Column(type: Types::INTEGER)]
+	private int $counter = 0;
+	
+	#[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+	private \DateTime $createdAt;
+	
+	#[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, updatable: true)]
+	private \DateTime $updatedAt;
 
     /**
      * @param string $url
@@ -32,6 +41,8 @@ class UrlCodePairEntity
     {
         $this->url = $url;
         $this->code = $code;
+		$this->setCreatedAt();
+		$this->updateDateTime();
     }
 
     /**
@@ -73,6 +84,48 @@ class UrlCodePairEntity
     {
         $this->code = $code;
     }
+	
+	/**
+	 * @return int
+	 */
+	public function getCounter(): int
+	{
+		return $this->counter;
+	}
+	
+	/**
+	 * @param int $counter
+	 */
+	public function incrementCounter(): void
+	{
+		$this->counter++;
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getCreatedAt(): \DateTime
+	{
+		return $this->createdAt;
+	}
+	
+	protected function setCreatedAt(): void
+	{
+		$this->createdAt = new \DateTime();
+	}
+	
+	/**
+	 * @return \DateTime
+	 */
+	public function getUpdatedAt(): \DateTime
+	{
+		return $this->updatedAt;
+	}
+	
+	public function updateDateTime(): void
+	{
+		$this->updatedAt = new \DateTime();
+	}
 
 
 

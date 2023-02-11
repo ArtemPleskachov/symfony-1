@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Shortener\Interfaces\IUrlEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +33,18 @@ class ShortenerController extends AbstractController
     {
         $code = $this->decoder->decode($request->request->get('url'));
         return new Response($code);
+    }
+	
+	#[Route('/{code}', requirements: ['code' => '\w{6}'], methods: 'GET')]
+    public function redirectAction(string $code): Response
+    {
+		try {
+			$url= $this->decoder->decode($code);
+			return new RedirectResponse($url);
+		} catch (\Throwable $e) {
+			$response = new Response($e->getMessage(), 400);
+		}
+		return $response;
     }
 	
 	
