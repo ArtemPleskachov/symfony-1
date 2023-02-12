@@ -31,8 +31,13 @@ class UrlCodePairEntity
 	#[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
 	private \DateTime $createdAt;
 	
+	#[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+	private \DateTime $lastVisit;
+	
 	#[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, updatable: true)]
 	private \DateTime $updatedAt;
+	
+	
 
     /**
      * @param string $url
@@ -44,6 +49,7 @@ class UrlCodePairEntity
         $this->code = $code;
 		$this->setCreatedAt();
 		$this->updateDateTime();
+		$this->lastVisit = new \DateTime();
     }
 
     /**
@@ -127,6 +133,28 @@ class UrlCodePairEntity
 	{
 		$this->updatedAt = new \DateTime();
 	}
+	
+	/**
+	 * @return \DateTime|null
+	 */
+	public function getLastVisit(): ?\DateTime
+	{
+		return $this->lastVisit;
+	}
+	
+	/**
+	 * @param \DateTime $lastVisit
+	 */
+	public function setLastVisit(\DateTime $lastVisit): self
+	{
+		$this->lastVisit = $lastVisit;
+		
+		return $this;
+	}
+	
+	
+	
+	
 
 
 

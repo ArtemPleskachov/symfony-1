@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Stat{% endblock %}
+
+{% block body %}
+    <h1>Stat for Code: {{ code }}</h1>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>URL</th>
+            <th>Counter</th>
+            <th>Created At</th>
+            <th>Last Visit</th>
+        </tr>
+        <tr>
+            <td>{{ url.id }}</td>
+            <td>{{ url.code }}</td>
+            <td>{{ url.url }}</td>
+            <td>{{ url.counter }}</td>
+            <td>{{ url.createdAt }}</td>
+            <td>{{ url.lastVisit }}</td>
+        </tr>
+    </table>
+{% endblock %}

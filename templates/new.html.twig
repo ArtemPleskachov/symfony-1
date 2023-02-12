@@ -1,0 +1,16 @@
+{# templates/url/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New URL{% endblock %}
+
+{% block body %}
+    <h1>Create New URL</h1>
+    <form action="{{ path('url_encode') }}" method="post">
+        <div>
+            <label for="url">URL:</label>
+            <input type="text" id="url" name="url">
+        </div>
+        <button type="submit">Encode</button>
+    </form>
+{% endblock %}

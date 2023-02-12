@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Статистика переходів по коду {{ code }}{% endblock %}
+
+
+{% block body %}
+    <h1>Stat for Code: {{ code }}</h1>
+
+    <section>
+        <ul>
+            <li>Id: {{ url_info.id }}</li>
+            <li>Code: {{ url_info.code }}</li>
+            <li>Url: {{ url_info.url }}</li>
+            <li>Counter: {{ url_info.counter }}</li>
+            <li>Created: {{ url_info.createdat }}</li>
+            <li>Last Visit: {{ url_info.lastVisit }}</li>
+        </ul>
+    </section>
+
+{% endblock %}
