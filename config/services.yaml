@@ -29,6 +29,11 @@ services:
             $anywayConverter: '@App\Shortener\Interfaces\IUrlEncoderAnyway'
         public: true
 
+    App\Controller\UrlController:
+        arguments:
+            $urlService: '@App\Services\UrlService'
+        public: true
+
     App\Shortener\Interfaces\IUrlEncoder:
         class: App\Shortener\UrlConverter
         public: true

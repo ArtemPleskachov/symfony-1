@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\UrlRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use App\Shortener\ValueObjects;
 
 
 
-#[ORM\Entity()]
+#[ORM\Entity(repositoryClass: UrlRepository::class)]
 #[ORM\Table(name: 'url_code')]
 class UrlCodePairEntity
 {

@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\UrlCodePairEntity;
+use App\Services\AbstractService;
+use App\Services\UrlService;
+use App\Shortener\Interfaces\IUrlDecoder;
 use App\Shortener\Interfaces\IUrlEncoder;
+use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,13 +15,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/url')]
-class ShortenerController extends AbstractController
+class UrlController extends AbstractController
 {
-
-
+	/**
+	 * @param IUrlEncoder $encoder
+	 * @param IUrlEncoder $decoder
+	 * @param UrlService $urlService
+	 */
+	
     public function __construct(
 		protected IUrlEncoder $encoder,
-		protected IUrlEncoder $decoder
+		protected IUrlEncoder $decoder,
+		protected AbstractService $urlService
 	)
 	{
 	}
@@ -35,17 +45,20 @@ class ShortenerController extends AbstractController
         return new Response($code);
     }
 	
-	#[Route('/{code}', requirements: ['code' => '\w{6}'], methods: 'GET')]
-    public function redirectAction(string $code): Response
-    {
+	#[Route('/{code}', requirements: ['code' => '\w{6}'], methods: ['get'])]
+	public function redirectAction(string $code): Response
+	{
 		try {
-			$url= $this->decoder->decode($code);
-			return new RedirectResponse($url);
+			$url = $this->urlService->getUrlByCodeAndIncrement($code);
+			$response = new RedirectResponse($url->getUrl());
 		} catch (\Throwable $e) {
 			$response = new Response($e->getMessage(), 400);
 		}
 		return $response;
     }
+	
+	
+	
 	
 	
 

@@ -35,27 +35,27 @@ class UrlValidator implements IUrlValidator
 	
 	//Use when the Internet is not available
 	 
-    public function checkRealUrl(string $url): bool
-    {
-        return true;
-    }
+//    public function checkRealUrl(string $url): bool
+//    {
+//        return true;
+//    }
 	
 	//Use when the Internet is available
 	
-//	/**
-//	 * @inheritDoc
-//	 */
-//    public function checkRealUrl(string $url): bool
-//    {
-//        $allowCodes = [
-//            200, 201, 301, 302
-//        ];
-//        try {
-//            $response = $this->client->request('GET', $url);
-//            return (!empty($response->getStatusCode()) && in_array($response->getStatusCode(), $allowCodes));
-//        } catch (ConnectException $exception) {
-//            throw new InvalidArgumentException($exception->getMessage(), $exception->getCode());
-//        }
-//
-//    }
+	/**
+	 * @inheritDoc
+	 */
+    public function checkRealUrl(string $url): bool
+    {
+        $allowCodes = [
+            200, 201, 301, 302
+        ];
+        try {
+            $response = $this->client->request('GET', $url);
+            return (!empty($response->getStatusCode()) && in_array($response->getStatusCode(), $allowCodes));
+        } catch (ConnectException $exception) {
+            throw new InvalidArgumentException($exception->getMessage(), $exception->getCode());
+        }
+
+    }
 }

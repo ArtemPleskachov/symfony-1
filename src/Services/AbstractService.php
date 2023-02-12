@@ -2,28 +2,32 @@
 
 namespace App\Services;
 
+namespace App\Services;
+
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Persistence\ObjectRepository;
 
 abstract class AbstractService
 {
-    protected ObjectManager $entityManager;
-
-    public function __construct(protected ManagerRegistry $doctrine)
-    {
-        $this->entityManager = $this->doctrine->getManager();
-    }
-
-    protected function save(object $object = null): void
-    {
-        if (!is_null($object)) {
-            $this->entityManager->persist($object);
-        }
-        $this->entityManager->flush();
-    }
-
-
-
-
-
+	
+	protected ObjectManager $em;
+	
+	
+	public function __construct(protected ManagerRegistry $doctrine)
+	{
+		$this->em = $this->doctrine->getManager();
+		$this->init();
+	}
+	
+	protected function init() {
+	
+	}
+	
+	protected function save(object $object = null) {
+		if (!is_null($object)) {
+			$this->em->persist($object);
+		}
+		$this->em->flush();
+	}
 }
